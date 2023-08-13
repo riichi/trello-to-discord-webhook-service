@@ -1,0 +1,22 @@
+[package]
+name = "trello-webhook"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.72"
+axum = { version = "0.6.20", features = ["headers"] }
+base64 = "0.21.2"
+chrono = { version = "0.4.26", features = ["serde"] }
+clap = { version = "4.3.21", features = ["derive"] }
+hmac = "0.12.1"
+hyper = "0.14.27"
+open = "5.0.0"
+reqwest = { version = "0.11.18", features = ["json"] }
+serde = { version = "1.0.183", features = ["derive"] }
+serde_json = "1.0.104"
+sha1 = "0.10.5"
+tokio = { version = "1.31.0", features = ["full"] }
+toml = "0.7.6"
