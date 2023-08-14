@@ -1,4 +1,4 @@
-# Trello -> Discord integration service
+# Trello → Discord webhook service
 ## Setting up
 ### Preliminaries
 
