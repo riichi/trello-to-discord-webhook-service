@@ -1,4 +1,7 @@
 # Trello → Discord webhook service
+[![Build Status](https://github.com/riichi/trello-to-discord-webhook-service/workflows/Rust%20CI/badge.svg)](https://github.com/riichi/trello-to-discord-webhook-service/actions)
+[![Docker Builds](https://github.com/riichi/trello-to-discord-webhook-service/workflows/Docker/badge.svg)](https://github.com/riichi/trello-to-discord-webhook-service/actions)
+
 ## Setting up
 ### Preliminaries
 
