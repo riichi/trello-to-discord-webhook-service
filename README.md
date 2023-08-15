@@ -5,8 +5,8 @@
 ## Setting up
 ### Preliminaries
 
-1. Set up a Trello Power-up at https://trello.com/power-ups/admin; keep the API key and secret, the rest is not
-   important
+1. Set up a Trello Power-up at https://trello.com/power-ups/admin; keep the API key and secret, also authorize the
+   power-up to get the API token (click `Token` next to the `API key` field in power-up settings)
 2. Set up a Discord webhook at a channel of choice, keep the URL
 
 ### Config file
@@ -16,31 +16,21 @@ First, copy an example config file to `config.toml`:
 cp config.example.toml config.toml
 ```
 
-Then populate `api.api_key`, `api.api_secret`, and `discord.url` entries with values from the above section.
+Then populate `api.api_key`, `api.api_secret`, `api.api_token`, and `discord.url` entries with values from the above
+section.
 Set `trello.callback_url` to your webhook's URL.
-`api.api_token` should remain unset for now.
 
-### Getting API token
-
-Power-up needs to be authorized to acces user's boards.
-A helper subcommand for this process is available:
-```shell
-cargo run authorize --name "Your webhook power-up" --expiration never
-```
-A browser window should pop up - after authorizing the app you'll be redirected to a page with an API token.
-Copy the token to the console window and press <kbd>Enter</kbd>.
-The application should automatically save the token in `config.toml`.
 To verify that the configuration is correct, call e.g.
 ```shell
 cargo run get-boards
 ```
-– a list of available board should be printed.
+– a list of available boards should be printed.
 
 ### Deploy the webhook
 
 We have to do this before actually registering the webhook since Trello does some HTTP requests upon webhook creation to
 verify that the service is working.
-A self-contained Dockerfile (which keeps a copy of your `config.toml` inside the image) is provided for convenience.
+The service has to be running and be available under `trello.callback_url`.
 
 ### Create webhook
 
