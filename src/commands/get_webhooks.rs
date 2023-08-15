@@ -24,10 +24,10 @@ struct Webhook {
 }
 
 pub async fn main(config: &Config) -> Result<()> {
-    let base_url = format!("{}/{}/webhooks", BASE_URL, config.api.token);
+    let base_url = format!("{}/{}/webhooks", BASE_URL, config.trello.token);
     let url = Url::parse_with_params(
         &base_url,
-        &[("key", &config.api.key), ("token", &config.api.token)],
+        &[("key", &config.trello.key), ("token", &config.trello.token)],
     )?;
     let response = reqwest::get(url).await?;
     let response: Vec<Webhook> = response.json().await?;

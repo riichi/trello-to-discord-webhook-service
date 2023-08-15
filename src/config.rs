@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 pub struct Config {
-    pub api: TrelloAPIConfig,
+    pub trello: TrelloAPIConfig,
     pub webhook: WebhookConfig,
     pub discord: DiscordConfig,
 }

@@ -24,8 +24,8 @@ pub async fn main(args: CreateWebhookArgs, config: &Config) -> Result<()> {
             ("callbackURL", config.webhook.url.as_str()),
             ("idModel", args.board_id.as_str()),
             ("active", if args.active { "true" } else { "false" }),
-            ("key", config.api.key.as_str()),
-            ("token", config.api.token.as_str()),
+            ("key", config.trello.key.as_str()),
+            ("token", config.trello.token.as_str()),
         ],
     )?;
     let client = Client::new();

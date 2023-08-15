@@ -30,7 +30,7 @@ struct Board {
 pub async fn main(config: &Config) -> Result<()> {
     let url = Url::parse_with_params(
         BASE_URL,
-        &[("key", &config.api.key), ("token", &config.api.token)],
+        &[("key", &config.trello.key), ("token", &config.trello.token)],
     )?;
     let response = reqwest::get(url).await?;
     let response: Vec<Board> = response.json().await?;

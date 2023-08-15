@@ -16,7 +16,7 @@ First, copy an example config file to `config.toml`:
 cp config.example.toml config.toml
 ```
 
-Then populate `api.key`, `api.secret`, `api.token`, and `discord.url` entries with values from the above
+Then populate `trello.key`, `trello.secret`, `trello.token`, and `discord.url` entries with values from the above
 section.
 Set `webhook.url` to your webhook's URL.
 

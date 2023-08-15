@@ -78,7 +78,7 @@ pub async fn main(config: &Config) -> Result<()> {
         .route("/", head(head_endpoint))
         .with_state(Arc::new(WebhookState {
             reporter: DiscordReporter::new(config.discord.url.clone()),
-            trello_api_secret: config.api.secret.clone(),
+            trello_api_secret: config.trello.secret.clone(),
             webhook_url: config.webhook.url.clone(),
         }));
 
