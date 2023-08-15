@@ -16,7 +16,7 @@ pub struct CreateWebhookArgs {
     pub active: bool,
 }
 
-pub async fn main(args: CreateWebhookArgs, config: &mut Config) -> Result<()> {
+pub async fn main(args: CreateWebhookArgs, config: &Config) -> Result<()> {
     let token = config.api.api_token.as_ref().expect("API token missing");
     let url = Url::parse_with_params(
         BASE_URL,

@@ -23,7 +23,7 @@ struct Webhook {
     pub first_consecutive_fail_date: Option<String>,
 }
 
-pub async fn main(config: &mut Config) -> Result<()> {
+pub async fn main(config: &Config) -> Result<()> {
     let token = config.api.api_token.as_ref().expect("API token missing");
     let base_url = format!("{}/{}/webhooks", BASE_URL, token);
     let url = Url::parse_with_params(&base_url, &[("key", &config.api.api_key), ("token", token)])?;

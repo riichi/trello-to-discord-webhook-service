@@ -72,7 +72,7 @@ struct WebhookState {
     pub webhook_url: String,
 }
 
-pub async fn main(config: &mut Config) -> Result<()> {
+pub async fn main(config: &Config) -> Result<()> {
     let app = Router::new()
         .route("/", post(post_endpoint))
         .route("/", head(head_endpoint))
