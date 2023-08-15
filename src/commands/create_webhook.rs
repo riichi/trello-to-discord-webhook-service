@@ -1,12 +1,13 @@
 use anyhow::Result;
 use clap::Args;
 use reqwest::{Client, Url};
+use tracing::info;
 
 use crate::config::Config;
 
 const BASE_URL: &str = "https://trello.com/1/webhooks";
 
-#[derive(Args)]
+#[derive(Debug, Args)]
 pub struct CreateWebhookArgs {
     #[arg(long)]
     pub description: String,
@@ -30,6 +31,6 @@ pub async fn main(args: CreateWebhookArgs, config: &Config) -> Result<()> {
     )?;
     let client = Client::new();
     let response = client.post(url).send().await?.text().await?;
-    println!("{}", response);
+    info!("{:#?}", response);
     Ok(())
 }

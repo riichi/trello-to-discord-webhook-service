@@ -9,3 +9,6 @@ url = "SETME"
 
 [discord]
 url = "SETME"
+
+[tracing]
+level = "INFO"
