@@ -1,8 +1,7 @@
-use std::io;
-
 use anyhow::Result;
 use clap::Args;
 use reqwest::{Client, Url};
+use tracing::info;
 
 use crate::config::Config;
 
@@ -32,6 +31,6 @@ pub async fn main(args: CreateWebhookArgs, config: &Config) -> Result<()> {
     )?;
     let client = Client::new();
     let response = client.post(url).send().await?.text().await?;
-    serde_json::to_writer_pretty(io::stdout().lock(), &response)?;
+    info!("{:#?}", response);
     Ok(())
 }
