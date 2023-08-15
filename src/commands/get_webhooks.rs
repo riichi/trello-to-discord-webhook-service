@@ -24,9 +24,11 @@ struct Webhook {
 }
 
 pub async fn main(config: &Config) -> Result<()> {
-    let token = config.api.api_token.as_ref().expect("API token missing");
-    let base_url = format!("{}/{}/webhooks", BASE_URL, token);
-    let url = Url::parse_with_params(&base_url, &[("key", &config.api.api_key), ("token", token)])?;
+    let base_url = format!("{}/{}/webhooks", BASE_URL, config.api.token);
+    let url = Url::parse_with_params(
+        &base_url,
+        &[("key", &config.api.key), ("token", &config.api.token)],
+    )?;
     let response = reqwest::get(url).await?;
     let response: Vec<Webhook> = response.json().await?;
     serde_json::to_writer_pretty(io::stdout().lock(), &response)?;

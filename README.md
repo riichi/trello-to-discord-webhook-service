@@ -9,28 +9,29 @@
    power-up to get the API token (click `Token` next to the `API key` field in power-up settings)
 2. Set up a Discord webhook at a channel of choice, keep the URL
 
-### Config file
+### Configuration
 
-First, copy an example config file to `config.toml`:
-```shell
-cp config.example.toml config.toml
-```
+Configuration is done with environment variables (cf. `config.rs`, `.env.example`):
 
-Then populate `api.api_key`, `api.api_secret`, `api.api_token`, and `discord.url` entries with values from the above
-section.
-Set `trello.callback_url` to your webhook's URL.
+* `API_KEY`, `API_SECRET`, `API_TOKEN`: Trello API credentials
+* `DISCORD_URL`: Discord webhook URL
+* `WEBHOOK_PORT`: which port to listen to (default 3000)
+* `WEBHOOK_URL`: Internet-accessible endpoint URL. Used to register the webhook at Trello and to verify HMAC signatures
+  of webhook event requests.
 
-To verify that the configuration is correct, call e.g.
+To verify that the variables are set properly, call e.g.
 ```shell
 cargo run get-boards
 ```
 – a list of available boards should be printed.
 
+If you are using the provided Compose file, you can simply copy `.env.example` to `.env` and fill in all missing values.
+
 ### Deploy the webhook
 
 We have to do this before actually registering the webhook since Trello does some HTTP requests upon webhook creation to
 verify that the service is working.
-The service has to be running and be available under `trello.callback_url`.
+The service has to be running and be available under `WEBHOOK_URL`.
 
 ### Create webhook
 

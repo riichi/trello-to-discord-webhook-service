@@ -17,16 +17,15 @@ pub struct CreateWebhookArgs {
 }
 
 pub async fn main(args: CreateWebhookArgs, config: &Config) -> Result<()> {
-    let token = config.api.api_token.as_ref().expect("API token missing");
     let url = Url::parse_with_params(
         BASE_URL,
         &[
             ("description", args.description.as_str()),
-            ("callbackURL", config.trello.callback_url.as_str()),
+            ("callbackURL", config.webhook.url.as_str()),
             ("idModel", args.board_id.as_str()),
             ("active", if args.active { "true" } else { "false" }),
-            ("key", config.api.api_key.as_str()),
-            ("token", token.as_str()),
+            ("key", config.api.key.as_str()),
+            ("token", config.api.token.as_str()),
         ],
     )?;
     let client = Client::new();

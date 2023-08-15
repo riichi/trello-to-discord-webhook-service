@@ -28,8 +28,10 @@ struct Board {
 }
 
 pub async fn main(config: &Config) -> Result<()> {
-    let token = config.api.api_token.as_ref().expect("API token missing");
-    let url = Url::parse_with_params(BASE_URL, &[("key", &config.api.api_key), ("token", token)])?;
+    let url = Url::parse_with_params(
+        BASE_URL,
+        &[("key", &config.api.key), ("token", &config.api.token)],
+    )?;
     let response = reqwest::get(url).await?;
     let response: Vec<Board> = response.json().await?;
     serde_json::to_writer_pretty(io::stdout().lock(), &response)?;

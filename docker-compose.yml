@@ -2,8 +2,7 @@ version: "3"
 services:
   trello-to-discord-webhook-service:
     image: ghcr.io/riichi/trello-to-discord-webhook-service:main
-    volumes:
-      - config.toml:/app
+    env_file: .env
     restart: always
     ports:
       - 10.0.3.1:40301:3000

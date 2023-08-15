@@ -1,5 +1,3 @@
-use std::fs;
-
 use anyhow::Result;
 use clap::{Parser, Subcommand};
 use commands::{
@@ -8,7 +6,8 @@ use commands::{
     get_webhooks::main as get_webhooks_main,
     start_webhook::main as start_webhook_main,
 };
-use config::Config;
+
+use crate::config::Config;
 
 mod commands;
 mod config;
@@ -32,9 +31,16 @@ enum Command {
     StartWebhook,
 }
 
+fn get_config() -> Result<Config> {
+    Ok(::config::Config::builder()
+        .add_source(::config::Environment::default().separator("_"))
+        .build()?
+        .try_deserialize()?)
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
-    let config: Config = toml::from_str(&fs::read_to_string("config.toml")?)?;
+    let config = get_config()?;
     let cli = Cli::parse();
     match cli.command {
         Command::CreateWebhook(args) => create_webhook_main(args, &config).await?,

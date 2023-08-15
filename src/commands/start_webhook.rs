@@ -78,11 +78,11 @@ pub async fn main(config: &Config) -> Result<()> {
         .route("/", head(head_endpoint))
         .with_state(Arc::new(WebhookState {
             reporter: DiscordReporter::new(config.discord.url.clone()),
-            trello_api_secret: config.api.api_secret.clone(),
-            webhook_url: config.trello.callback_url.clone(),
+            trello_api_secret: config.api.secret.clone(),
+            webhook_url: config.webhook.url.clone(),
         }));
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], config.trello.port));
+    let addr = SocketAddr::from(([0, 0, 0, 0], config.webhook.port));
     Ok(Server::bind(&addr).serve(app.into_make_service()).await?)
 }
 
