@@ -6,6 +6,7 @@ use commands::{
     get_webhooks::main as get_webhooks_main,
     start_webhook::main as start_webhook_main,
 };
+use tracing::debug;
 
 use crate::config::Config;
 
@@ -13,13 +14,13 @@ mod commands;
 mod config;
 mod models;
 
-#[derive(Parser)]
+#[derive(Debug, Parser)]
 struct Cli {
     #[command(subcommand)]
     command: Command,
 }
 
-#[derive(Subcommand)]
+#[derive(Debug, Subcommand)]
 enum Command {
     /// Create Trello webhook.
     CreateWebhook(CreateWebhookArgs),
@@ -39,10 +40,21 @@ fn get_config() -> Result<Config> {
         .try_deserialize()?)
 }
 
+fn configure_tracing(config: &Config) -> Result<()> {
+    let level = config.tracing.try_parse_level()?;
+    tracing_subscriber::fmt::SubscriberBuilder::default()
+        .with_max_level(level)
+        .init();
+    Ok(())
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     let config = get_config()?;
+    configure_tracing(&config)?;
+    debug!("Config: {:#?}", config);
     let cli = Cli::parse();
+    debug!("CLI: {:#?}", cli);
     match cli.command {
         Command::CreateWebhook(args) => create_webhook_main(args, &config).await?,
         Command::GetBoards => get_boards_main(&config).await?,

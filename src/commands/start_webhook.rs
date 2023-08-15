@@ -13,6 +13,8 @@ use hmac::{Hmac, Mac};
 use hyper::{body::Bytes, HeaderMap};
 use reqwest::{Client, StatusCode};
 use sha1::Sha1;
+use tower_http::trace::{DefaultOnResponse, TraceLayer};
+use tracing::{debug, warn, Level};
 
 use crate::{
     config::Config,
@@ -80,7 +82,10 @@ pub async fn main(config: &Config) -> Result<()> {
             reporter: DiscordReporter::new(config.discord.url.clone()),
             trello_api_secret: config.trello.secret.clone(),
             webhook_url: config.webhook.url.clone(),
-        }));
+        }))
+        .layer(
+            TraceLayer::new_for_http().on_response(DefaultOnResponse::default().level(Level::INFO)),
+        );
 
     let addr = SocketAddr::from(([0, 0, 0, 0], config.webhook.port));
     Ok(Server::bind(&addr).serve(app.into_make_service()).await?)
@@ -99,15 +104,15 @@ async fn post_endpoint(
     )?;
 
     let event: WebhookEvent = serde_json::from_slice(&raw_body).map_err(|e| {
-        println!("Could not parse payload: {}", e);
+        warn!("Could not parse payload: {}", e);
         (StatusCode::BAD_REQUEST, "Could not parse payload").into_response()
     })?;
-    println!(
+    debug!(
         "New event: {} (date: {})",
         event.action._type, event.action.date
     );
     state.reporter.report(event).await.map_err(|e| {
-        println!("Internal server error: {}", e);
+        warn!("Internal server error: {}", e);
         (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error").into_response()
     })
 }
