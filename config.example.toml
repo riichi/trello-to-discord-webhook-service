@@ -1,0 +1,11 @@
+[api]
+key = "SETME"
+secret = "SETME"
+token = "SETME"
+
+[webhook]
+port = 3000
+url = "SETME"
+
+[discord]
+url = "SETME"

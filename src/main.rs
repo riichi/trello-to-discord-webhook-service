@@ -33,6 +33,7 @@ enum Command {
 
 fn get_config() -> Result<Config> {
     Ok(::config::Config::builder()
+        .add_source(::config::File::with_name("config"))
         .add_source(::config::Environment::default().separator("_"))
         .build()?
         .try_deserialize()?)

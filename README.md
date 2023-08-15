@@ -11,27 +11,29 @@
 
 ### Configuration
 
-Configuration is done with environment variables (cf. `config.rs`, `.env.example`):
+First, copy an example config file to `config.toml`:
+```shell
+cp config.example.toml config.toml
+```
 
-* `API_KEY`, `API_SECRET`, `API_TOKEN`: Trello API credentials
-* `DISCORD_URL`: Discord webhook URL
-* `WEBHOOK_PORT`: which port to listen to (default 3000)
-* `WEBHOOK_URL`: Internet-accessible endpoint URL. Used to register the webhook at Trello and to verify HMAC signatures
-  of webhook event requests.
+Then populate `api.key`, `api.secret`, `api.token`, and `discord.url` entries with values from the above
+section.
+Set `webhook.url` to your webhook's URL.
 
-To verify that the variables are set properly, call e.g.
+To verify that the Trello configuration is correct, call e.g.
 ```shell
 cargo run get-boards
 ```
 – a list of available boards should be printed.
 
-If you are using the provided Compose file, you can simply copy `.env.example` to `.env` and fill in all missing values.
+> :information_source: Settings can be also overridden with environment variables, e.g. exporting `WEBHOOK_PORT=8080`
+> will cause the service to listen on port 8080 regardless of `config.toml`'s contents.
 
 ### Deploy the webhook
 
 We have to do this before actually registering the webhook since Trello does some HTTP requests upon webhook creation to
 verify that the service is working.
-The service has to be running and be available under `WEBHOOK_URL`.
+The service has to be running and be available under `webhook.url`.
 
 ### Create webhook
 
