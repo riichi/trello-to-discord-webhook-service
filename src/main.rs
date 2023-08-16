@@ -13,6 +13,7 @@ use crate::config::Config;
 mod commands;
 mod config;
 mod models;
+mod reporting;
 
 #[derive(Debug, Parser)]
 struct Cli {
