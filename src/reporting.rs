@@ -7,6 +7,8 @@ use crate::models::{
     WebhookEvent,
 };
 
+const COLOR_GREEN: u32 = 0x00ff00;
+
 #[derive(Debug)]
 pub struct DiscordReporter {
     endpoint: String,
@@ -39,7 +41,7 @@ impl DiscordReporter {
                 _type: Some(String::from("rich")),
                 description: card_name,
                 url: card_url,
-                color: Some(0x00ff00),
+                color: Some(COLOR_GREEN),
                 fields: vec![],
                 timestamp: Some(event.action.date),
                 author: Self::get_author(event.action.member_creator),
