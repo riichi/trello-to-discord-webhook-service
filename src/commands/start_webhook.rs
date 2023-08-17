@@ -13,8 +13,8 @@ use hmac::{Hmac, Mac};
 use hyper::{body::Bytes, HeaderMap};
 use reqwest::StatusCode;
 use sha1::Sha1;
-use tower_http::trace::{DefaultOnResponse, TraceLayer};
-use tracing::{debug, warn, Level};
+use tower_http::trace::TraceLayer;
+use tracing::{debug, warn};
 
 use crate::{config::Config, models::trello_webhook::Event, reporting::DiscordReporter};
 
@@ -33,9 +33,7 @@ pub async fn main(config: &Config) -> Result<()> {
             trello_api_secret: config.trello.secret.clone(),
             webhook_url: config.webhook.url.clone(),
         }))
-        .layer(
-            TraceLayer::new_for_http().on_response(DefaultOnResponse::default().level(Level::INFO)),
-        );
+        .layer(TraceLayer::new_for_http());
 
     let addr = SocketAddr::from(([0, 0, 0, 0], config.webhook.port));
     Ok(Server::bind(&addr).serve(app.into_make_service()).await?)
