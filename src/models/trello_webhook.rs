@@ -37,7 +37,7 @@ pub struct ActionDisplay {
 
 #[derive(Debug, Deserialize)]
 pub struct TrelloCard {
-    pub name: String,
+    pub name: Option<String>,
     #[serde(alias = "shortLink")]
     pub short_link: String,
 }
