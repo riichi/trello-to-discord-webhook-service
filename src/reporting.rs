@@ -3,8 +3,11 @@ use reqwest::Client;
 use tracing::debug;
 
 use crate::models::{
-    DiscordEmbed, DiscordEmbedAuthor, DiscordWebhookEvent, MemberCreator, WebhookActionDisplay,
-    WebhookEvent,
+    discord::{
+        Embed as DiscordEmbed, EmbedAuthor as DiscordEmbedAuthor,
+        WebhookEvent as DiscordWebhookEvent,
+    },
+    trello_webhook::{ActionDisplay, Event, MemberCreator},
 };
 
 const COLOR_GREEN: u32 = 0x00ff00;
@@ -27,7 +30,7 @@ impl DiscordReporter {
         }
     }
 
-    pub async fn report(&self, event: WebhookEvent) -> Result<()> {
+    pub async fn report(&self, event: Event) -> Result<()> {
         if Self::should_skip(&event) {
             debug!("Skipping event {:?}", event);
             return Ok(());
@@ -59,7 +62,7 @@ impl DiscordReporter {
     }
 
     #[must_use]
-    fn should_skip(event: &WebhookEvent) -> bool {
+    fn should_skip(event: &Event) -> bool {
         event
             .action
             .display
@@ -68,7 +71,7 @@ impl DiscordReporter {
     }
 
     #[must_use]
-    fn should_skip_action_display(action_display: &WebhookActionDisplay) -> bool {
+    fn should_skip_action_display(action_display: &ActionDisplay) -> bool {
         action_display
             .translation_key
             .as_ref()

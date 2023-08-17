@@ -16,7 +16,7 @@ use sha1::Sha1;
 use tower_http::trace::{DefaultOnResponse, TraceLayer};
 use tracing::{debug, warn, Level};
 
-use crate::{config::Config, models::WebhookEvent, reporting::DiscordReporter};
+use crate::{config::Config, models::trello_webhook::Event, reporting::DiscordReporter};
 
 struct WebhookState {
     pub reporter: DiscordReporter,
@@ -53,7 +53,7 @@ async fn post_endpoint(
         &headers,
     )?;
 
-    let event: WebhookEvent = serde_json::from_slice(&raw_body).map_err(|e| {
+    let event: Event = serde_json::from_slice(&raw_body).map_err(|e| {
         warn!("Could not parse payload: {}", e);
         (StatusCode::BAD_REQUEST, "Could not parse payload").into_response()
     })?;
