@@ -14,6 +14,7 @@ pub struct DiscordReporter {
 }
 
 impl DiscordReporter {
+    #[must_use]
     pub fn new(endpoint: String) -> Self {
         Self {
             endpoint,
@@ -52,6 +53,7 @@ impl DiscordReporter {
         Ok(())
     }
 
+    #[must_use]
     fn should_skip(event: &WebhookEvent) -> bool {
         event
             .action
@@ -60,6 +62,7 @@ impl DiscordReporter {
             .is_some_and(Self::should_skip_action_display)
     }
 
+    #[must_use]
     fn should_skip_action_display(action_display: &WebhookActionDisplay) -> bool {
         action_display
             .translation_key
@@ -67,10 +70,12 @@ impl DiscordReporter {
             .is_some_and(|s| Self::should_skip_action_translation_key(s))
     }
 
+    #[must_use]
     fn should_skip_action_translation_key(translation_key: &str) -> bool {
         ["action_moved_card_higher", "action_moved_card_lower"].contains(&translation_key)
     }
 
+    #[must_use]
     fn get_author(creator: Option<MemberCreator>) -> Option<DiscordEmbedAuthor> {
         creator.map(|creator| DiscordEmbedAuthor {
             name: creator.full_name.unwrap_or(creator.username),
