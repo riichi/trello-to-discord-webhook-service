@@ -10,6 +10,7 @@ use crate::models::{
 const COLOR_GREEN: u32 = 0x00ff00;
 const TYPE_RICH: &str = "rich";
 const ACTIONS_MOVE_CARD: [&str; 2] = ["action_moved_card_higher", "action_moved_card_lower"];
+const TRELLO_ROOT_URL: &str = "https://trello.com";
 
 #[derive(Debug)]
 pub struct DiscordReporter {
@@ -35,7 +36,7 @@ impl DiscordReporter {
         let mut card_url: Option<String> = None;
         if let Some(card) = event.action.data.card {
             card_name = Some(card.name);
-            card_url = Some(format!("https://trello.com/c/{}", card.short_link));
+            card_url = Some(format!("{}/c/{}", TRELLO_ROOT_URL, card.short_link));
         }
         let discord_event = DiscordWebhookEvent {
             embeds: vec![DiscordEmbed {
