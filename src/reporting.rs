@@ -116,6 +116,7 @@ impl DiscordReporter {
             "copyCard" => "Card copied",
             "createCard" => "Card created",
             "deleteBoardInvitation" => "Board invitation deleted",
+            "deleteComment" => "Comment removed from a card",
             "removeChecklistFromCard" => "Checklist removed from a card",
             "updateBoard" => "Board updated",
             "updateCard" => "Card updated",
