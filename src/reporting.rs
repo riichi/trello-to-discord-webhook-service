@@ -9,6 +9,7 @@ use crate::models::{
 
 const COLOR_GREEN: u32 = 0x00ff00;
 const TYPE_RICH: &str = "rich";
+const ACTIONS_MOVE_CARD: [&str; 2] = ["action_moved_card_higher", "action_moved_card_lower"];
 
 #[derive(Debug)]
 pub struct DiscordReporter {
@@ -75,7 +76,7 @@ impl DiscordReporter {
 
     #[must_use]
     fn should_skip_action_translation_key(translation_key: &str) -> bool {
-        ["action_moved_card_higher", "action_moved_card_lower"].contains(&translation_key)
+        ACTIONS_MOVE_CARD.contains(&translation_key)
     }
 
     #[must_use]
