@@ -8,6 +8,7 @@ use crate::models::{
 };
 
 const COLOR_GREEN: u32 = 0x00ff00;
+const TYPE_RICH: &str = "rich";
 
 #[derive(Debug)]
 pub struct DiscordReporter {
@@ -38,7 +39,7 @@ impl DiscordReporter {
         let discord_event = DiscordWebhookEvent {
             embeds: vec![DiscordEmbed {
                 title: Some(event.action._type),
-                _type: Some(String::from("rich")),
+                _type: Some(String::from(TYPE_RICH)),
                 description: card_name,
                 url: card_url,
                 color: Some(COLOR_GREEN),
