@@ -14,6 +14,7 @@ pub struct WebhookAction {
     #[serde(alias = "memberCreator")]
     pub member_creator: Option<MemberCreator>,
     pub data: WebhookActionData,
+    pub display: Option<WebhookActionDisplay>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -26,6 +27,12 @@ pub struct MemberCreator {
 #[derive(Debug, Deserialize)]
 pub struct WebhookActionData {
     pub card: Option<TrelloCard>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct WebhookActionDisplay {
+    #[serde(alias = "translationKey")]
+    pub translation_key: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
