@@ -7,6 +7,7 @@ use crate::models::{
     WebhookEvent,
 };
 
+#[derive(Debug)]
 pub struct DiscordReporter {
     endpoint: String,
     client: Client,
