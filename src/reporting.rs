@@ -24,7 +24,7 @@ impl DiscordReporter {
 
     pub async fn report(&self, event: WebhookEvent) -> Result<()> {
         if Self::should_skip(&event) {
-            debug!("Skipping event");
+            debug!("Skipping event {:?}", event);
             return Ok(());
         }
         let mut card_name: Option<String> = None;
