@@ -88,6 +88,7 @@ impl DiscordReporter {
     fn get_action_display_name(translation_key: &str) -> Option<&str> {
         match translation_key {
             "action_added_list_to_board" => Some("List added"),
+            "action_add_label_to_card" => Some("Label added to a card"),
             "action_archived_card" => Some("Card archived"),
             "action_archived_list" => Some("List archived"),
             "action_changed_description_of_card" => Some("Card description changed"),
