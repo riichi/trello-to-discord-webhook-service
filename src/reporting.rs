@@ -114,6 +114,7 @@ impl DiscordReporter {
             "addAttachmentToCard" => "Attachment added to a card",
             "addChecklistToCard" => "Checklist added to a card",
             "addMemberToBoard" => "Added member to the board",
+            "addMemberToCard" => "Added member to a card",
             "copyCard" => "Card copied",
             "createCard" => "Card created",
             "deleteBoardInvitation" => "Board invitation deleted",
