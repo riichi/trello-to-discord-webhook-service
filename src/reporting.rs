@@ -101,6 +101,9 @@ impl DiscordReporter {
             "action_member_left_card" => Some("Member removed from a card"),
             "action_completed_checkitem" => Some("Checklist item completed"),
             "action_marked_checkitem_incomplete" => Some("Checklist item marked incomplete"),
+            "action_invited_an_unconfirmed_member_to_board" => {
+                Some("Invited an unconfirmed member to board")
+            }
             _ => {
                 warn!("Unknown action name translation key: {}", translation_key);
                 None
