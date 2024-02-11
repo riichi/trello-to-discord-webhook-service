@@ -1,4 +1,4 @@
-FROM rust:1.71 as builder
+FROM rust:1.76 as builder
 
 COPY . .
 RUN cargo install --path .
