@@ -98,7 +98,9 @@ impl DiscordReporter {
             "action_move_card_from_list_to_list" => Some("Card moved"),
             "action_renamed_card" => Some("Card renamed"),
             "action_member_joined_card" => Some("Member added to a card"),
-            "action_member_left_card" => Some("Member removed from a card"),
+            "action_member_left_card" | "action_removed_member_from_card" => {
+                Some("Member removed from a card")
+            }
             "action_completed_checkitem" => Some("Checklist item completed"),
             "action_marked_checkitem_incomplete" => Some("Checklist item marked incomplete"),
             "action_invited_an_unconfirmed_member_to_board" => {
