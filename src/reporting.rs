@@ -2,13 +2,10 @@ use anyhow::Result;
 use reqwest::Client;
 use tracing::{debug, warn};
 
-use crate::models::{
-    discord::{
-        Embed as DiscordEmbed, EmbedAuthor as DiscordEmbedAuthor,
-        WebhookEvent as DiscordWebhookEvent,
-    },
-    trello_webhook::{Event, MemberCreator},
+use crate::models::discord::{
+    Embed as DiscordEmbed, EmbedAuthor as DiscordEmbedAuthor, WebhookEvent as DiscordWebhookEvent,
 };
+use crate::models::trello_webhook::{Event, MemberCreator};
 
 const COLOR_GREEN: u32 = 0x00ff00;
 const TYPE_RICH: &str = "rich";

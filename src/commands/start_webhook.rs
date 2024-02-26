@@ -1,22 +1,24 @@
-use std::{net::SocketAddr, sync::Arc};
+use std::net::SocketAddr;
+use std::sync::Arc;
 
 use anyhow::Result;
-use axum::{
-    self,
-    extract::State,
-    response::{IntoResponse, Response},
-    routing::{head, post},
-    Router, Server,
-};
-use base64::{engine::general_purpose::STANDARD as Base64, Engine};
+use axum::extract::State;
+use axum::http::StatusCode;
+use axum::response::{IntoResponse, Response};
+use axum::routing::{head, post};
+use axum::{self, Router};
+use base64::engine::general_purpose::STANDARD as Base64;
+use base64::Engine;
 use hmac::{Hmac, Mac};
-use hyper::{body::Bytes, HeaderMap};
-use reqwest::StatusCode;
+use hyper::body::Bytes;
+use hyper::HeaderMap;
 use sha1::Sha1;
 use tower_http::trace::TraceLayer;
 use tracing::{debug, warn};
 
-use crate::{config::Config, models::trello_webhook::Event, reporting::DiscordReporter};
+use crate::config::Config;
+use crate::models::trello_webhook::Event;
+use crate::reporting::DiscordReporter;
 
 struct WebhookState {
     pub reporter: DiscordReporter,
@@ -36,7 +38,8 @@ pub async fn main(config: &Config) -> Result<()> {
         .layer(TraceLayer::new_for_http());
 
     let addr = SocketAddr::from(([0, 0, 0, 0], config.webhook.port));
-    Ok(Server::bind(&addr).serve(app.into_make_service()).await?)
+    let listener = tokio::net::TcpListener::bind(&addr).await?;
+    Ok(axum::serve(listener, app.into_make_service()).await?)
 }
 
 async fn post_endpoint(

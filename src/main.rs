@@ -1,11 +1,9 @@
 use anyhow::Result;
 use clap::{Parser, Subcommand};
-use commands::{
-    create_webhook::{main as create_webhook_main, CreateWebhookArgs},
-    get_boards::main as get_boards_main,
-    get_webhooks::main as get_webhooks_main,
-    start_webhook::main as start_webhook_main,
-};
+use commands::create_webhook::{main as create_webhook_main, CreateWebhookArgs};
+use commands::get_boards::main as get_boards_main;
+use commands::get_webhooks::main as get_webhooks_main;
+use commands::start_webhook::main as start_webhook_main;
 use tracing::debug;
 
 use crate::config::Config;

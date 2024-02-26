@@ -1,11 +1,17 @@
-FROM rust:1.76-slim-bookworm as builder
+FROM rust:1.76-bookworm as builder
 
+RUN mkdir /app
+WORKDIR "/app"
 COPY . .
 RUN cargo install --path .
 
 FROM debian:bookworm-slim
 
-RUN apt update -y && apt install -y ca-certificates && apt-get clean && rm -rf /var/lib/apt/lists/*
+# hadolint ignore=DL3008
+RUN apt-get update -y && \
+    apt-get install --no-install-recommends -y ca-certificates && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/local/cargo/bin/trello-webhook /usr/local/bin/trello-webhook
 RUN mkdir /app
 WORKDIR "/app"

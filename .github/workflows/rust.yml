@@ -2,6 +2,9 @@ name: Rust CI
 
 on:
   push:
+  pull_request:
+  schedule:
+    - cron: "0 0 * * *"
 
 env:
   CARGO_TERM_COLOR: always
@@ -14,17 +17,22 @@ concurrency:
 
 jobs:
   build:
+    # Run on external PRs and pushes to branches on the repo
+    # This is to avoid double running on PRs from internal branches
+    if: github.event_name == 'push' || github.event_name == 'schedule' ||
+      github.event.pull_request.head.repo.full_name != github.repository
     strategy:
       matrix:
-        rust: [ "stable", "nightly" ]
-        os: [ ubuntu-latest ]
+        rust: [stable, nightly]
+        os: [ubuntu-latest]
+
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cache Cargo registry
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/registry
@@ -43,14 +51,16 @@ jobs:
         run: cargo +${{ matrix.rust }} test
 
   clippy:
+    if: github.event_name == 'push' || github.event_name == 'schedule' ||
+      github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
-    needs: [ "build" ]
+    needs: ["build"]
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cache Cargo registry
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/registry
@@ -58,22 +68,25 @@ jobs:
           key: ${{ runner.os }}-cargo-debug-${{ hashFiles('**/Cargo.toml') }}
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@beta
+        uses: dtolnay/rust-toolchain@master
         with:
+          toolchain: stable
           components: clippy
 
       - name: Run clippy
         run: cargo clippy -- -Dclippy::all
 
   rustfmt:
+    if: github.event_name == 'push' || github.event_name == 'schedule' ||
+      github.event.pull_request.head.repo.full_name != github.repository
     runs-on: ubuntu-latest
-    needs: [ "build" ]
+    needs: ["build"]
     steps:
       - name: Checkout source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cache Cargo registry
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/registry
