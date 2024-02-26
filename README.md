@@ -1,6 +1,9 @@
-# Trello → Discord webhook service
-[![Build Status](https://github.com/riichi/trello-to-discord-webhook-service/workflows/Rust%20CI/badge.svg)](https://github.com/riichi/trello-to-discord-webhook-service/actions)
-[![Docker Builds](https://github.com/riichi/trello-to-discord-webhook-service/workflows/Docker/badge.svg)](https://github.com/riichi/trello-to-discord-webhook-service/actions)
+Trello → Discord webhook service
+================================
+
+[![Rust Build Status](https://github.com/riichi/trello-to-discord-webhook-service/workflows/Rust%20CI/badge.svg)](https://github.com/riichi/trello-to-discord-webhook-service/actions/workflows/rust.yml)
+[![Docker Build Status](https://github.com/riichi/trello-to-discord-webhook-service/workflows/Docker/badge.svg)](https://github.com/riichi/trello-to-discord-webhook-service/actions/workflows/docker-publish.yml)
+[![MIT licensed](https://img.shields.io/github/license/riichi/trello-to-discord-webhook-service)](https://github.com/riichi/trello-to-discord-webhook-service/blob/master/LICENSE)
 
 ## Setting up
 ### Preliminaries
