@@ -1,9 +1,9 @@
-FROM rust:1.76 as builder
+FROM rust:1.76-slim-bookworm as builder
 
 COPY . .
 RUN cargo install --path .
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 RUN apt update -y && apt install -y ca-certificates && apt-get clean && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/local/cargo/bin/trello-webhook /usr/local/bin/trello-webhook
